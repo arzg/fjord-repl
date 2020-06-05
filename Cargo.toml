@@ -1,0 +1,14 @@
+[package]
+name = "fjord-repl"
+version = "0.1.0"
+authors = ["Aramis Razzaghipour <aramisnoah@gmail.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "A REPL for Fjord code."
+documentation = "https://docs.rs/fjord-repl"
+homepage = "https://github.com/arzg/fjord-repl"
+repository = "https://github.com/arzg/fjord-repl"
+
+[dependencies]
+anyhow = "1"
+fjord = "0.1"
