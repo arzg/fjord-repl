@@ -29,9 +29,9 @@ checksum = "b486ce3ccf7ffd79fdeb678eac06a9e6c09fc88d33836340becb8fffe87c5e33"
 
 [[package]]
 name = "fjord"
-version = "0.2.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bdb3ce420c8854b438cdad778dd8a3182877effa5a47a05e326f97a5de672b9f"
+checksum = "e427711c3aec60a7dda51ce1ff2c5f3732e411a752b2d912454de5feeaa92a37"
 dependencies = [
  "nom",
  "thiserror",

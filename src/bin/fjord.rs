@@ -1,11 +1,19 @@
-use std::io::{self, Write};
+use std::{
+    io::{self, Write},
+    path::Path,
+};
+
+const PATH: [&str; 5] = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"];
 
 fn main() -> anyhow::Result<()> {
     let stdin = io::stdin();
     let mut stdout = io::stdout();
     let mut stderr = io::stderr();
 
-    let mut state = fjord::eval::State::new_root();
+    let commands = fjord::Commands::default();
+    commands.rescan(PATH.iter().map(Path::new))?;
+
+    let mut state = fjord::eval::State::new_root(&commands);
 
     loop {
         write!(stdout, "→ ")?;
