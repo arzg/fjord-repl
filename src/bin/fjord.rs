@@ -1,32 +1,38 @@
-use std::{
-    io::{self, Write},
-    path::Path,
-};
+use fjord::env::Env;
+use fjord::parser::Parser;
+use std::io::{self, Write};
 
-const PATH: [&str; 5] = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"];
-
-fn main() -> anyhow::Result<()> {
+fn main() -> io::Result<()> {
     let stdin = io::stdin();
     let mut stdout = io::stdout();
-    let mut stderr = io::stderr();
 
-    let commands = fjord::Commands::default();
-    commands.rescan(PATH.iter().map(Path::new))?;
-
-    let mut state = fjord::eval::State::new_root(&commands);
+    let mut env = Env::new();
 
     loop {
         write!(stdout, "→ ")?;
         stdout.flush()?;
 
-        let mut s = String::new();
-        stdin.read_line(&mut s)?;
+        let mut input = String::new();
+        stdin.read_line(&mut input)?;
 
-        let eval_result = fjord::eval(s.trim(), &mut state);
+        let parser = Parser::new(&input);
+        let parse_output = parser.parse();
 
-        match eval_result {
-            Ok(output) => writeln!(stdout, "{}", output)?,
-            Err(e) => writeln!(stderr, "Error: {:?}", anyhow::Error::new(e))?,
+        println!("{}", parse_output.debug_tree());
+
+        if let Some(parse_output) = parse_output.clone().into_no_errors() {
+            println!("No errors were found. Evaluating...");
+
+            let eval_result = parse_output.eval(&mut env);
+            dbg!(&eval_result);
+        } else {
+            println!("Errors:");
+
+            for error in parse_output.errors() {
+                dbg!(error);
+            }
+
+            println!("Syntax errors were found. Skipping evaluation.");
         }
     }
 }

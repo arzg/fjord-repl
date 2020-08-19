@@ -11,4 +11,4 @@ repository = "https://github.com/arzg/fjord-repl"
 
 [dependencies]
 anyhow = "1"
-fjord = "0.3"
+fjord = "0.4"
