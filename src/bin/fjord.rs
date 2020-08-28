@@ -1,13 +1,27 @@
+use atty::Stream;
 use fjord::env::Env;
 use fjord::parser::Parser;
-use std::io::{self, Write};
+use std::io::{self, Read, Write};
 
 fn main() -> io::Result<()> {
-    let stdin = io::stdin();
+    let mut stdin = io::stdin();
     let mut stdout = io::stdout();
 
     let mut env = Env::new();
 
+    if atty::is(Stream::Stdin) {
+        repl(&mut env, &stdin, &mut stdout)?;
+    } else {
+        let mut input = String::new();
+        stdin.read_to_string(&mut input)?;
+
+        process_chunk(&input, &mut env, &mut stdout)?;
+    }
+
+    Ok(())
+}
+
+fn repl(env: &mut Env, stdin: &io::Stdin, stdout: &mut io::Stdout) -> io::Result<()> {
     loop {
         write!(stdout, "→ ")?;
         stdout.flush()?;
@@ -15,7 +29,7 @@ fn main() -> io::Result<()> {
         let mut input = String::new();
         stdin.read_line(&mut input)?;
 
-        process_chunk(&input, &mut env, &mut stdout)?;
+        process_chunk(&input, env, stdout)?;
     }
 }
 
