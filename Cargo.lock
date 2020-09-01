@@ -36,9 +36,9 @@ dependencies = [
 
 [[package]]
 name = "fjord"
-version = "0.4.5"
+version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a3e2fbdbdfe7e07da01ad22428c4787e480ba73207a6b85fa7ec83dd046e6cc"
+checksum = "d94224c4b6a4d22eb743493430348f6ac09e4993a1982fc4d42d9b60203ebee6"
 dependencies = [
  "logos",
  "num_enum",
