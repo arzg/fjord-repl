@@ -2,12 +2,22 @@ use atty::Stream;
 use fjord::env::Env;
 use fjord::parser::Parser;
 use std::io::{self, Read, Write};
+use std::path::PathBuf;
 
 fn main() -> io::Result<()> {
     let mut stdin = io::stdin();
     let mut stdout = io::stdout();
 
-    let mut env = Env::new();
+    let search_path = vec![
+        PathBuf::from("/usr/local/sbin"),
+        PathBuf::from("/usr/local/bin"),
+        PathBuf::from("/usr/sbin"),
+        PathBuf::from("/usr/bin"),
+        PathBuf::from("/sbin"),
+        PathBuf::from("/bin"),
+    ];
+
+    let mut env = Env::new(search_path)?;
 
     if atty::is(Stream::Stdin) {
         repl(&mut env, &stdin, &mut stdout)?;
