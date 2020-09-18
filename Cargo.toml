@@ -1,13 +1,13 @@
 [package]
-name = "fjord-repl"
-version = "0.2.3"
 authors = ["Aramis Razzaghipour <aramisnoah@gmail.com>"]
-edition = "2018"
-license = "MIT OR Apache-2.0"
 description = "A REPL for Fjord code."
 documentation = "https://docs.rs/fjord-repl"
+edition = "2018"
 homepage = "https://github.com/arzg/fjord-repl"
+license = "MIT OR Apache-2.0"
+name = "fjord-repl"
 repository = "https://github.com/arzg/fjord-repl"
+version = "0.2.3"
 
 [dependencies]
 anyhow = "1"
